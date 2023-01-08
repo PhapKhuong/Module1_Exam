@@ -47,11 +47,11 @@ function countDate()
 
         if (m === 2)
             {
-                if (testLeapYear(y)) document.getElementById("result3").innerText = "Tháng" + month + " có 29 ngày";
-                else document.getElementById("result3").innerText = "Tháng" + month + " có 28 ngày";
+                if (testLeapYear(y)) document.getElementById("result3").innerText = "Tháng " + month + " có 29 ngày";
+                else document.getElementById("result3").innerText = "Tháng " + month + " có 28 ngày";
             }
-        else if (checkMonth(m)) document.getElementById("result3").innerText = "Tháng" + month + " có 31 ngày";
-        else document.getElementById("result3").innerText = "Tháng" + month + " có 30 ngày";
+        else if (checkMonth(m)) document.getElementById("result3").innerText = "Tháng " + month + " có 31 ngày";
+        else document.getElementById("result3").innerText = "Tháng " + month + " có 30 ngày";
     };
 
 function checkInput(inputDate)
@@ -60,11 +60,9 @@ function checkInput(inputDate)
         let str = inputDate.slice(2, 3);
         let num2 = +inputDate.slice(3, 7);
 
-        if (isNaN(num1)) return false;
-
-        if (num1 > 0 && num1 < 13)
+        if (str === "/")
             {
-                if (str === "/")
+                if (num1 > 0 && num1 < 13)
                     {
                         if (num2 > 0) return true;
                     }
@@ -94,15 +92,15 @@ function testLeapYear(yyyy)
             {
                 if (yyyy % 100 === 0)
                     {
-                        if (yyyy % 400 !== 0)
+                        if (yyyy % 400 === 0)
                             {
                                 isLeapYear = true;
                             }
                     }
+                else isLeapYear = true;
             }
 
         if (isLeapYear) return true;
-        //Không phải là năm nhuận
     };
 
 // Câu 4:
@@ -199,10 +197,36 @@ function createWorker()
 
         workers.push(worker);
         update();
-        return workers; 
+        return workers;
     };
 
 function sortWorker()
     {
+        let names = [];
+        for (let i = 0; i < workers.length; i++)
+            {
+                names[i] = workers[i].name;
+            };
 
+        names.sort();
+        let temp;
+
+        for (let j = 0; j < names.length; j++)
+            {
+                let l = 0;
+                while (l < workers.length)
+                    {
+                        if (workers[l].name === names[j])
+                            {
+                                temp = workers[j];
+                                workers[j] = workers[l];
+                                workers[l] = temp;
+                                break;
+                            }
+                        else l += 1;
+                    };
+            };
+
+        update();
+        return workers;
     };
